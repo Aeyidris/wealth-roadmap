@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdullah's $5M Roadmap</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #0A0E1A;
+    --surface: #111827;
+    --surface2: #1C2333;
+    --gold: #F5A623;
+    --gold-dim: #7A5310;
+    --green: #22C55E;
+    --blue: #3B82F6;
+    --text: #E8EAF0;
+    --muted: #6B7280;
+    --border: #1F2937;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    padding: 24px 16px 48px;
+  }
+
+  .container { max-width: 720px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .header .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: clamp(28px, 6vw, 44px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .header h1 span { color: var(--gold); }
+  .header p { color: var(--muted); font-size: 15px; }
+
+  /* Starting point */
+  .start-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .start-item { text-align: center; }
+  .start-item .val {
+    font-family: 'Space Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .start-item .lbl { font-size: 12px; color: var(--muted); }
+
+  /* Phase cards */
+  .phase {
+    margin-bottom: 28px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--surface);
+    cursor: pointer;
+    user-select: none;
+  }
+  .phase-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    background: rgba(245,166,35,0.1);
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+  .phase-title { flex: 1; }
+  .phase-title h3 { font-size: 17px; font-weight: 600; margin-bottom: 2px; }
+  .phase-title p { font-size: 13px; color: var(--muted); }
+  .phase-target {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--green);
+    text-align: right;
+    white-space: nowrap;
+  }
+  .phase-target span { display: block; font-size: 11px; color: var(--muted); font-family: 'Space Grotesk', sans-serif; }
+
+  .phase-body {
+    background: var(--surface2);
+    padding: 0 24px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+  .phase-body.open {
+    max-height: 800px;
+    padding: 20px 24px 24px;
+  }
+
+  .action-list { list-style: none; }
+  .action-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    line-height: 1.5;
+    color: #CBD5E1;
+  }
+  .action-list li:last-child { border-bottom: none; }
+  .action-list li::before {
+    content: '→';
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .income-bar {
+    margin: 16px 0 8px;
+    background: var(--border);
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .income-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--green));
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+  .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 16px;
+  }
+
+  /* Wealth tracker */
+  .tracker {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  .tracker h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+  }
+  .milestones { display: flex; flex-direction: column; gap: 0; }
+  .milestone {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .milestone:last-child { border-bottom: none; }
+  .m-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-dim);
+    background: var(--bg);
+    flex-shrink: 0;
+  }
+  .m-dot.done { background: var(--gold); border-color: var(--gold); }
+  .m-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    width: 60px;
+    flex-shrink: 0;
+  }
+  .m-label { flex: 1; font-size: 14px; }
+  .m-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    text-align: right;
+  }
+
+  /* Key rules */
+  .rules {
+    background: rgba(245,166,35,0.05);
+    border: 1px solid var(--gold-dim);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  .rules h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+  .rule {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(245,166,35,0.1);
+    font-size: 14px;
+    color: #CBD5E1;
+    line-height: 1.5;
+  }
+  .rule:last-child { border-bottom: none; }
+  .rule-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--gold);
+    flex-shrink: 0;
+    width: 24px;
+  }
+
+  /* Toggle arrow */
+  .arrow {
+    color: var(--muted);
+    font-size: 12px;
+    transition: transform 0.3s;
+    margin-left: 8px;
+  }
+  .arrow.open { transform: rotate(180deg); }
+
+  /* First phase open indicator */
+  .badge {
+    display: inline-block;
+    background: rgba(34,197,94,0.15);
+    color: var(--green);
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Space Mono', monospace;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  @media (max-width: 480px) {
+    .start-card { grid-template-columns: 1fr 1fr; }
+    .start-card .start-item:last-child { grid-column: span 2; }
+    .phase-target { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="label">Personal Wealth Plan · Abdullah Abubakar Idris</div>
+    <h1>Your Road to <span>$5 Million</span></h1>
+    <p>Starting point: ₦200K–500K/month · No savings · Age 28</p>
+  </div>
+
+  <!-- Starting snapshot -->
+  <div class="start-card">
+    <div class="start-item">
+      <div class="val">~₦350K</div>
+      <div class="lbl">Est. monthly income</div>
+    </div>
+    <div class="start-item">
+      <div class="val">$0</div>
+      <div class="lbl">Current net worth</div>
+    </div>
+    <div class="start-item">
+      <div class="val">~20 yrs</div>
+      <div class="lbl">Target timeline</div>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-number">PHASE 1</div>
+      <div class="phase-title">
+        <h3>Earn More, Save First <span class="badge">START HERE</span></h3>
+        <p>2026 – 2028 · Ages 28–30</p>
+      </div>
+      <div class="phase-target">$5,000–$15,000<span>net worth target</span></div>
+      <span class="arrow open">▲</span>
+    </div>
+    <div class="phase-body open">
+      <div class="income-bar"><div class="income-bar-fill" style="width:15%"></div></div>
+      <div class="bar-labels"><span>Now: ~$200/mo</span><span>Target: $1,500/mo</span></div>
+      <ul class="action-list">
+        <li>Land the Data Enterprise banking role — immediate income boost to ₦500K–₦800K/month plus structure your career narrative</li>
+        <li>Open a dollar account (GTB, Zenith, or Access domiciliary account) and start saving in USD — even $50/month shields you from naira inflation</li>
+        <li>Get certified: Google Data Analytics (free), Microsoft PL-300 Power BI ($165 exam), and dbt Analytics Engineering. These unlock higher-paying roles fast</li>
+        <li>Start freelancing on Upwork or Toptal — even 1–2 small data projects a month at $200–$500 each adds meaningfully to savings</li>
+        <li>Live on 60% of income. Save 20%, invest 20%. Non-negotiable discipline now pays off exponentially later</li>
+        <li>Open a Bamboo or Trove account and start buying US index funds (S&P 500 ETF) monthly — even ₦50,000/month to start</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="phase">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-number">PHASE 2</div>
+      <div class="phase-title">
+        <h3>Go Remote, Go Dollar</h3>
+        <p>2028 – 2031 · Ages 30–33</p>
+      </div>
+      <div class="phase-target">$50,000–$100,000<span>net worth target</span></div>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="income-bar"><div class="income-bar-fill" style="width:40%"></div></div>
+      <div class="bar-labels"><span>Now: $1,500/mo</span><span>Target: $3,000–$5,000/mo</span></div>
+      <ul class="action-list">
+        <li>Target remote data analyst or BI engineer roles with European, UK, or US companies — Nigerian data analysts working for foreign firms earn ₦1.2M–₦3M+ monthly</li>
+        <li>Your SQL + Power BI + Tableau + banking domain experience makes you hireable for fintech and financial data roles globally</li>
+        <li>Add Python to your skillset (Pandas, NumPy) — this crosses you from analyst to data engineer territory and nearly doubles your market rate</li>
+        <li>By now your S&P 500 investments (2 years of ₦50K/month) should be worth ~$3,000–$5,000. Don't touch it</li>
+        <li>Your web development skills (HTML, CSS, JS) — build one data dashboard or SaaS product. Even a niche B2B tool charging $29/month to 50 clients = $1,450 passive monthly income</li>
+        <li>Document every career win: cost savings identified, dashboards built, decisions influenced. This becomes your negotiation arsenal for salary jumps</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="phase">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-number">PHASE 3</div>
+      <div class="phase-title">
+        <h3>Stack Multiple Income Streams</h3>
+        <p>2031 – 2036 · Ages 33–38</p>
+      </div>
+      <div class="phase-target">$250,000–$500,000<span>net worth target</span></div>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="income-bar"><div class="income-bar-fill" style="width:65%"></div></div>
+      <div class="bar-labels"><span>Now: $3,000–$5,000/mo</span><span>Target: $8,000+/mo total</span></div>
+      <ul class="action-list">
+        <li>By now you should have 3 income streams: primary job ($4,000–$6,000/mo), freelance consulting ($1,000–$2,000/mo), and investment returns</li>
+        <li>Real estate: Lagos property in areas like Lekki, Ajah, or Ibeju-Lekki. A plot bought now for ₦8–15M could be worth 2–3x in 5 years. Your dollar savings make this achievable</li>
+        <li>Your investment portfolio should be worth $50,000–$80,000 by now if you've been consistent. At 10% annual return, money starts working harder than you do</li>
+        <li>Consider moving into senior/lead data roles — Data Engineering Lead, Head of Analytics, or Data Product Manager roles at this level pay $8,000–$15,000/month remotely</li>
+        <li>Reinvest all passive income. This is the compounding phase — every dollar reinvested now is worth 3x by the end of the roadmap</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="phase">
+    <div class="phase-header" onclick="toggle(this)">
+      <div class="phase-number">PHASE 4</div>
+      <div class="phase-title">
+        <h3>Compound to $5 Million</h3>
+        <p>2036 – 2048 · Ages 38–50</p>
+      </div>
+      <div class="phase-target">$5,000,000<span>net worth target</span></div>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="income-bar"><div class="income-bar-fill" style="width:100%"></div></div>
+      <div class="bar-labels"><span>Now: $8,000+/mo</span><span>Target: $15,000+/mo</span></div>
+      <ul class="action-list">
+        <li>At $500K net worth with disciplined reinvestment at 10% annual return, compound growth alone adds $50,000/year — that figure accelerates each year</li>
+        <li>Your real estate portfolio (2–3 Lagos properties) should be worth $300,000–$600,000 by this phase</li>
+        <li>Your data career at senior/principal level or your own consultancy generates $10,000–$20,000/month</li>
+        <li>Consider angel investing in Nigerian startups once you hit $300K+ net worth — early-stage fintech or agritech could deliver 10–50x returns</li>
+        <li>$5M is the finish line but not the stopping point — at this stage your money generates $400,000–$500,000 per year passively at safe withdrawal rates</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Milestone timeline -->
+  <div class="tracker">
+    <h2>// WEALTH MILESTONES</h2>
+    <div class="milestones">
+      <div class="milestone">
+        <div class="m-dot done"></div>
+        <div class="m-year">2026</div>
+        <div class="m-label">Start investing. Open dollar account. Get certified.</div>
+        <div class="m-value">$0 → start</div>
+      </div>
+      <div class="milestone">
+        <div class="m-dot"></div>
+        <div class="m-year">2027</div>
+        <div class="m-label">First $5,000 saved in USD</div>
+        <div class="m-value">$5,000</div>
+      </div>
+      <div class="milestone">
+        <div class="m-dot"></div>
+        <div class="m-year">2028</div>
+        <div class="m-label">Remote role secured. Earning in dollars.</div>
+        <div class="m-value">$20,000</div>
+      </div>
+      <div class="milestone">
+        <div class="m-dot"></div>
+        <div class="m-year">2030</div>
+        <div class="m-label">First Lagos property acquired</div>
+        <div class="m-value">$60,000</div>
+      </div>
+      <div class="milestone">
+        <div class="m-dot"></div>
+        <div class="m-year">2032</div>
+        <div class="m-label">Investment portfolio hits $100K</div>
+        <div class="m-value">$150,000</div>
+      </div>
+      <div class="milestone">
+        <div class="m-dot"></div>
+        <div class="m-year">2036</div>
+        <div class="m-label">Half a million milestone</div>
+        <div class="m-value">$500,000</div>
+      </div>
+      <div class="milestone">
+        <div class="m-dot"></div>
+        <div class="m-year">2040</div>
+        <div class="m-label">Compound growth takes over</div>
+        <div class="m-value">$1,500,000</div>
+      </div>
+      <div class="milestone">
+        <div class="m-dot"></div>
+        <div class="m-year">2048</div>
+        <div class="m-label">Goal achieved 🎯</div>
+        <div class="m-value">$5,000,000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The 5 golden rules -->
+  <div class="rules">
+    <h2>// THE 5 RULES THAT MAKE OR BREAK THIS PLAN</h2>
+    <div class="rule"><span class="rule-num">01</span><span><strong>Earn in dollars as fast as possible.</strong> Every year in naira-only income is a year lost to inflation. This is the single highest-leverage move available to you.</span></div>
+    <div class="rule"><span class="rule-num">02</span><span><strong>Save before you spend.</strong> Move money to investments on payday, not what's left at month end. What's left is always zero.</span></div>
+    <div class="rule"><span class="rule-num">03</span><span><strong>Never sell your index funds.</strong> The S&P 500 has returned ~10% annually for 100 years. Your job is to keep buying and never panic-sell.</span></div>
+    <div class="rule"><span class="rule-num">04</span><span><strong>Skills are your highest-return asset right now.</strong> A ₦30,000 course that gets you a $2,000/month raise returns 800% in year one. Invest in yourself first.</span></div>
+    <div class="rule"><span class="rule-num">05</span><span><strong>Avoid lifestyle inflation.</strong> Every raise should increase your investment rate, not your rent or car budget. The wealthy live below their means longer than anyone expects.</span></div>
+  </div>
+
+</div>
+
+<script>
+  function toggle(header) {
+    const body = header.nextElementSibling;
+    const arrow = header.querySelector('.arrow');
+    const isOpen = body.classList.contains('open');
+    // close all
+    document.querySelectorAll('.phase-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.arrow').forEach(a => { a.textContent = '▼'; a.classList.remove('open'); });
+    if (!isOpen) {
+      body.classList.add('open');
+      arrow.textContent = '▲';
+      arrow.classList.add('open');
+    }
+  }
+</script>
+</body>
+</html>
